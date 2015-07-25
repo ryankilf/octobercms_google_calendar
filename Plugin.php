@@ -1,5 +1,6 @@
 <?php namespace Kilfedder\GoogleCalendar;
 
+use Backend\Facades\Backend;
 use System\Classes\PluginBase;
 
 /**
@@ -55,7 +56,33 @@ class Plugin extends PluginBase
                 'icon' => 'icon-calendar',
                 'description' => 'Configure Google Calendar API options.',
                 'class' => 'Kilfedder\GoogleCalendar\Models\Settings',
-                'order' => 600
+                'order' => 800
+            ]
+        ];
+    }
+
+
+
+    public function registerNavigation()
+    {
+        return [
+            'googlecalendar' => [
+                'label'       => 'kilfedder.googlecalendar::lang.calendars.menu_label',
+                'url'         => Backend::url('kilfedder/googlecalendar/calendars'),
+                'icon'        => 'icon-calendar',
+                'order'       => 300,
+                'sideMenu' => [
+                    'calendars' => [
+                        'label'       => 'kilfedder.googlecalendar::lang.calendars.menu_label',
+                        'icon'        => 'icon-calendar',
+                        'url'         => Backend::url('kilfedder/googlecalendar/calendars')
+                    ],
+                    'images' => [
+                        'label'       => 'kilfedder.googlecalendar::lang.images.menu_label',
+                        'icon'        => 'icon-picture-o',
+                        'url'         => Backend::url('kilfedder/googlecalendar/images')
+                    ]
+                ]
             ]
         ];
     }

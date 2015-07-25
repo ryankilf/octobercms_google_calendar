@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Calendar
+
+# Model Form Field configuration
+form: $/kilfedder/googlecalendar/models/calendar/fields.yaml
+
+# Model Class name
+modelClass: Kilfedder\GoogleCalendar\Models\Calendar
+
+# Default redirect location
+defaultRedirect: kilfedder/googlecalendar/calendars
+
+# Create page
+create:
+    title: Create Calendar
+    redirect: kilfedder/googlecalendar/calendars/update/:id
+    redirectClose: kilfedder/googlecalendar/calendars
+
+# Update page
+update:
+    title: Edit Calendar
+    redirect: kilfedder/googlecalendar/calendars
+    redirectClose: kilfedder/googlecalendar/calendars
+
+# Preview page
+preview:
+    title: Preview Calendar

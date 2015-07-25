@@ -6,3 +6,15 @@ fields:
     id:
         label: ID
         disabled: true
+    summary:
+        label: kilfedder.googlecalendar::lang.fields.summary
+        disabled: true
+    description:
+        label: kilfedder.googlecalendar::lang.fields.description
+        disabled: true
+    last_sync_date:
+        label: kilfedder.googlecalendar::lang.fields.last_sync_date
+        disabled: true
+    enabled:
+        label: kilfedder.googlecalendar::lang.fields.enabled
+        type: switch

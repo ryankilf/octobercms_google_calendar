@@ -6,3 +6,10 @@ columns:
     id:
         label: ID
         searchable: true
+    summary:
+        label: kilfedder.googlecalendar::lang.fields.summary
+        searchable: true
+    last_sync_date:
+        label: kilfedder.googlecalendar::lang.fields.last_sync_date
+    enabled:
+        label: kilfedder.googlecalendar::lang.fields.enabled
