@@ -1,0 +1,15 @@
+{
+  "name": "kilfedder/googlecalendar",
+  "description": "Google Calendar integration plugin for OctoberCMS",
+  "keywords": ["october", "cms", "rainlab", "google", "calendar"],
+  "authors": [
+    {
+      "name": "Ryan Kilfedder",
+      "email": "ryankilf@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "google/apiclient": "dev-master"
+  }
+}
