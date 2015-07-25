@@ -9,3 +9,7 @@
 1.0.3:
 - Add images (semi automatically) to events
 - create_calendar_images.php
+
+1.0.4:
+- Navigation and language
+- add_calendar_image_label_field.php

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Calendar Image
+
+# Model Form Field configuration
+form: $/kilfedder/googlecalendar/models/calendarimage/fields.yaml
+
+# Model Class name
+modelClass: Kilfedder\GoogleCalendar\Models\CalendarImage
+
+# Default redirect location
+defaultRedirect: kilfedder/googlecalendar/calendarimages
+
+# Create page
+create:
+    title: Create Calendar Image
+    redirect: kilfedder/googlecalendar/calendarimages/update/:id
+    redirectClose: kilfedder/googlecalendar/calendarimages
+
+# Update page
+update:
+    title: Edit Calendar Image
+    redirect: kilfedder/googlecalendar/calendarimages
+    redirectClose: kilfedder/googlecalendar/calendarimages
+
+# Preview page
+preview:
+    title: Preview Calendar Image

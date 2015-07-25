@@ -16,6 +16,13 @@ return [
         'description' => 'description',
         'last_sync_date' => 'Last Sync',
         'enabled' => 'Enabled',
+        'label' => 'Label',
+        'keywords' => 'Keywords',
+        'image' => 'Image',
+        'explain' => [
+            'images_keywords' => 'Keywords used to match images to events',
+            'images_label' => 'This is simply to help you identify the image'
+        ]
     ],
     'api_fields' => [
         'project_name' => 'Google API Project Name',

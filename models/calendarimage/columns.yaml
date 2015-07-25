@@ -1,0 +1,14 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+    label:
+        label: kilfedder.googlecalendar::lang.fields.label
+        searchable: true
+    keywords:
+        label: kilfedder.googlecalendar::lang.fields.keywords
+        searchable: true

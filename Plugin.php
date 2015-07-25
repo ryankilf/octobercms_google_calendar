@@ -80,7 +80,7 @@ class Plugin extends PluginBase
                     'images' => [
                         'label'       => 'kilfedder.googlecalendar::lang.images.menu_label',
                         'icon'        => 'icon-picture-o',
-                        'url'         => Backend::url('kilfedder/googlecalendar/images')
+                        'url'         => Backend::url('kilfedder/googlecalendar/calendarimages')
                     ]
                 ]
             ]

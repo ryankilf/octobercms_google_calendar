@@ -1,0 +1,24 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    id:
+        label: ID
+        disabled: true
+        span: left
+        commentAbove: &nbsp;
+    label:
+        label: kilfedder.googlecalendar::lang.fields.label
+        type: text
+        span: right
+        commentAbove: kilfedder.googlecalendar::lang.fields.explain.images_label
+    keywords:
+        label: kilfedder.googlecalendar::lang.fields.keywords
+        type: textarea
+        commentAbove: kilfedder.googlecalendar::lang.fields.explain.images_keywords
+    image:
+        label: kilfedder.googlecalendar::lang.fields.image
+        type: fileupload
+        mode: image
+        fileTypes: jpg,jpeg,png,gif
