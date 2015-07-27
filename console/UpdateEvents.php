@@ -40,16 +40,13 @@ class UpdateEvents extends UpdateBase
             $this->comment('If that\'s not something you want, press Ctrl+C *now*');
         }
 
-        //Order by rand sometimes in case we get a crash in one calendar somehow..
+        //shuffle sometimes in case we get a crash in one calendar somehow..
+        $calendars = Calendar::where('enabled', '=', 1)->orderBy('synced_at', 'ASC')->get();
         if (rand(1, 8) == 2) {
-            $calendars = Calendar::all()->random()->get();
-        } else {
-            $calendars = Calendar::orderBy('synced_at', 'ASC')->get();
+            $calendars->shuffle();
         }
-
         foreach ($calendars as $calendar) {
             $this->info('processing ' . $calendar->calendar_id);
-
             /**
              * Full sync will occasionally happen on the calendars, just in case...
              */
