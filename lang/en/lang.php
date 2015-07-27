@@ -14,7 +14,7 @@ return [
     'fields' => [
         'summary' => 'summary',
         'description' => 'description',
-        'last_sync_date' => 'Last Sync',
+        'synced_at' => 'Last Sync',
         'enabled' => 'Enabled',
         'label' => 'Label',
         'keywords' => 'Keywords',

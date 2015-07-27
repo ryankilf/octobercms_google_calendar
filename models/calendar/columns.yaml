@@ -9,7 +9,7 @@ columns:
     summary:
         label: kilfedder.googlecalendar::lang.fields.summary
         searchable: true
-    last_sync_date:
-        label: kilfedder.googlecalendar::lang.fields.last_sync_date
+    synced_at:
+        label: kilfedder.googlecalendar::lang.fields.synced_at
     enabled:
         label: kilfedder.googlecalendar::lang.fields.enabled

@@ -12,8 +12,8 @@ fields:
     description:
         label: kilfedder.googlecalendar::lang.fields.description
         disabled: true
-    last_sync_date:
-        label: kilfedder.googlecalendar::lang.fields.last_sync_date
+    synced_at:
+        label: kilfedder.googlecalendar::lang.fields.synced_at
         disabled: true
     enabled:
         label: kilfedder.googlecalendar::lang.fields.enabled

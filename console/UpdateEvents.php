@@ -44,13 +44,18 @@ class UpdateEvents extends UpdateBase
         if (rand(1, 8) == 2) {
             $calendars = Calendar::all()->random()->get();
         } else {
-            $calendars = Calendar::orderBy('last_sync_date', 'ASC')->get();
+            $calendars = Calendar::orderBy('synced_at', 'ASC')->get();
         }
 
         foreach ($calendars as $calendar) {
             $this->info('processing ' . $calendar->calendar_id);
-            $this->updateEventsForCalendar($calendar, $timeMin, $timeMax);
-            $calendar->last_sync_date = new \DateTime('now');
+
+            /**
+             * Full sync will occasionally happen on the calendars, just in case...
+             */
+            $newSyncDate = new \DateTime('now');
+            $this->updateEventsForCalendar($calendar, $timeMin, $timeMax, rand(1, 10) == 4);
+            $calendar->synced_at = $newSyncDate; //Assign this to the calendar AFTER the syncing
             $calendar->save();
         }
 
@@ -60,7 +65,14 @@ class UpdateEvents extends UpdateBase
         }
     }
 
-    private function updateEventsForCalendar(Calendar $calendar, \DateTime $timeMin, \DateTime $timeMax)
+    /**
+     * 
+     * @param Calendar $calendar
+     * @param \DateTime $timeMin
+     * @param \DateTime $timeMax
+     * @param bool|false $fullSync
+     */
+    private function updateEventsForCalendar(Calendar $calendar, \DateTime $timeMin, \DateTime $timeMax, $fullSync = false)
     {
 
         $params = [
@@ -70,7 +82,14 @@ class UpdateEvents extends UpdateBase
             'timeMin' => $timeMin->format(\DateTime::RFC3339),
         ];
 
-        $this->info('Making first request with calendar');
+        if($calendar->synced_at && !$fullSync) {
+            $originalSyncDate = new \DateTime($calendar->synced_at);
+            $params['updatedMin'] = $originalSyncDate->format(\DateTime::RFC3339);
+            $this->info('Making Calendar request for events modified since ' .$originalSyncDate->format(\DateTime::RFC3339));
+        } else {
+            $this->info('Making first request with calendar');
+        }
+
         $eventList = $this->service->events->listEvents($calendar->calendar_id, $params);
         while (true) {
             foreach ($eventList->getItems() as $event) {
@@ -84,7 +103,6 @@ class UpdateEvents extends UpdateBase
             $params['pageToken'] = $pageToken;
             $eventList = $this->service->events->listEvents($calendar->calendar_id, $params);
         }
-
     }
 
     private function processOneEvent(\Google_Service_Calendar_Event $googleServiceCalendarEvent, Calendar $calendar)
@@ -124,13 +142,20 @@ class UpdateEvents extends UpdateBase
         $event->calendar = $calendar->id;
         $event->event_id = $uid;
         $event->ical_uid = $googleServiceCalendarEvent->getICalUID();
-
         $event->start_date = $startTime;
         $event->all_day_event = $allDay;
         $event->end_date = $endTime;
         $event->summary = (string)$googleServiceCalendarEvent->getSummary();
         $event->description = (string)$googleServiceCalendarEvent->getDescription();
         $event->location = (string)$googleServiceCalendarEvent->getLocation();
+        if(!$event->image) {
+            $this->attemptToAddImageToEvent($event, $calendar);
+        }
         $event->save();
+    }
+
+    private function attemptToAddImageToEvent(Event $event, Calendar $calendar)
+    {
+
     }
 }
