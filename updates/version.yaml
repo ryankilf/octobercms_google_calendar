@@ -13,3 +13,7 @@
 1.0.4:
 - Navigation and language
 - add_calendar_image_label_field.php
+
+1.0.5:
+- Slugs
+- add_slugs.php

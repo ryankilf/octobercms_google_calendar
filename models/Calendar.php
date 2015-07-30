@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use October\Rain\Database\Model;
+use October\Rain\Database\Traits\Sluggable;
 
 /**
  * Calendar Model
@@ -9,10 +10,14 @@ use October\Rain\Database\Model;
 class Calendar extends Model
 {
     use SoftDeletes;
+    use Sluggable;
     /**
      * @var string The database table used by the model.
      */
     public $table = 'kilfedder_googlecalendar_calendars';
+
+    protected $slugs = [ 'slug' => 'summary'];
+    protected $dates = ['synced_at', 'created_at', 'updated_at'];
 
     /**
      * @var array Guarded fields
@@ -36,5 +41,7 @@ class Calendar extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+
 
 }
