@@ -14,7 +14,7 @@ class Event extends Model
      */
     public $table = 'kilfedder_googlecalendar_events';
 
-    protected $slugs = [ 'slug' => ['summary', 'start_date']];
+    protected $slugs = [ 'slug' => ['summary', 'summary.start_date', 'start_date']];
     protected $dates = [ 'start_date', 'end_date', 'created_at', 'updated_at'];
 
     /**
@@ -40,13 +40,6 @@ class Event extends Model
     public $attachOne = [];
     public $attachMany = [];
 
-    protected function getSlugDate() {
-        if(is_a($this->start_date, 'DateTime')) {
-            $startDate = new \DateTime($this->start_date);
-            return $startDate->format('Y-m-d');
-        }
 
-        return '';
-    }
 
 }

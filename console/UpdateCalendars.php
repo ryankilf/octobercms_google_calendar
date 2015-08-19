@@ -48,24 +48,24 @@ class UpdateCalendars extends UpdateBase
             if ($calendarListEntry->getDeleted()) {
 
                 $this->comment('Calendar doesn\`t exist anyway' . print_r($calendarListEntry->getDeleted(), true));
-                //return;
+                return;
             }
             $this->comment('New Calendar!');
             $calendar = new Calendar();
         }
 
-        /*if ($calendarListEntry->getDeleted()) {
+        if ($calendarListEntry->getDeleted()) {
             $this->comment('Deleting Calendar');
             $calendar->delete();
             return;
-        }*/
+        }
 
         $calendar->foreground_colour = (string) $calendarListEntry->getForegroundColor();
         $calendar->background_colour = (string) $calendarListEntry->getBackgroundColor();
         $calendar->etag = $calendarListEntry->getEtag();
         $calendar->calendar_id = $calendarListEntry->getId();
         $calendar->summary = (string) $calendarListEntry->getSummary();
-        $calendar->description = (string)$calendarListEntry->getDescription();
+        $calendar->description = (string) $calendarListEntry->getDescription();
         $calendar->save();
         $this->comment('Calendar Saved');
     }

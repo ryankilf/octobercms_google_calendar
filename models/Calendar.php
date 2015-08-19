@@ -16,7 +16,7 @@ class Calendar extends Model
      */
     public $table = 'kilfedder_googlecalendar_calendars';
 
-    protected $slugs = [ 'slug' => 'summary'];
+    protected $slugs = ['slug' => ['summary', 'description', 'etag']];
     protected $dates = ['synced_at', 'created_at', 'updated_at'];
 
     /**
@@ -42,6 +42,15 @@ class Calendar extends Model
     public $attachOne = [];
     public $attachMany = [];
 
+    /**
+     * Sets the "url" attribute with a URL to this object
+     * @param string $pageName
+     * @param Cms\Classes\Controller $controller
+     */
+    public function setUrl($pageName, $controller)
+    {
 
+        return $this->url = $controller->pageUrl($pageName, $params);
+    }
 
 }
