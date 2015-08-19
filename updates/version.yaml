@@ -1,19 +1,5 @@
 1.0.1:
 - First version of GoogleCalendar
-
-1.0.2:
-- Databases are good
 - create_calendars_table.php
 - create_events_table.php
-
-1.0.3:
-- Add images (semi automatically) to events
 - create_calendar_images.php
-
-1.0.4:
-- Navigation and language
-- add_calendar_image_label_field.php
-
-1.0.5:
-- Slugs
-- add_slugs.php

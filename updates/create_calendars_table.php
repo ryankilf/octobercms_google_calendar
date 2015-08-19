@@ -19,6 +19,7 @@ class CreateCalendarsTable extends Migration
             $table->text('summary', 512);
             $table->char('description', 255);
             $table->dateTime('synced_at')->nullable();
+            $table->char('slug', 255);
             $table->softDeletes();
             $table->timestamps();
         });

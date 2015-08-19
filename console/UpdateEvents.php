@@ -20,7 +20,7 @@ class UpdateEvents extends UpdateBase
 
     public function fire()
     {
-
+        $startTime = microtime(true);
 
         $years_forward = $this->settings->years_forward;
         if (!is_numeric($years_forward) || $years_forward <= 0) {
@@ -45,21 +45,33 @@ class UpdateEvents extends UpdateBase
         if (rand(1, 8) == 2) {
             $calendars->shuffle();
         }
+
         foreach ($calendars as $calendar) {
+            $calendarStartProcessingTime = microtime(true);
             $this->info('processing ' . $calendar->calendar_id);
             /**
              * Full sync will occasionally happen on the calendars, just in case...
              */
             $newSyncDate = new \DateTime('now');
-            $this->updateEventsForCalendar($calendar, $timeMin, $timeMax, rand(1, 10) == 4);
-            $calendar->synced_at = $newSyncDate; //Assign this to the calendar AFTER the syncing
-            $calendar->save();
+            $calendarUpdatedOk = $this->updateEventsForCalendar($calendar, $timeMin, $timeMax, rand(1, 10) == 4);
+            if($calendarUpdatedOk) {
+                $calendar->synced_at = $newSyncDate; //Assign this to the calendar AFTER the syncing
+                $calendar->save();
+            }
+            $calendarEndProcessingTime = microtime(true);
+            $this->displayTimeDiff('Time to sync calendar', $calendarStartProcessingTime, $calendarEndProcessingTime);
         }
 
         if (boolval($this->settings->delete_old_events)) {
             $this->info('Deleting events before ' . $timeMin->format('Y-m-d H:i:s'));
             Event::where('start_date', '<', $timeMin)->delete();
         }
+        $this->displayTimeDiff('Time to sync all calendars', $startTime, microtime(true));
+    }
+
+    function displayTimeDiff($message, $start, $end)
+    {
+        $this->info($message.' : '.abs($start - $end));
     }
 
     /**
@@ -87,18 +99,33 @@ class UpdateEvents extends UpdateBase
             $this->info('Making first request with calendar');
         }
 
-        $eventList = $this->service->events->listEvents($calendar->calendar_id, $params);
+        $pageNumber = 1;
+
         while (true) {
+            try {
+                $eventList = $this->service->events->listEvents($calendar->calendar_id, $params);
+            } catch (\Exception $e) {
+
+                $this->error('Failed to get events for this calendar');
+                $this->warning('Failed on page '. $pageNumber);
+
+                if($pageNumber == 1) {
+                    $this->info('This is likely to be because the service account user does not have access to this calendar');
+                    $this->info('You may ignore this if that\'s what you want');
+                }
+                return false;
+            }
+            $pageNumber ++;
+
             foreach ($eventList->getItems() as $event) {
                 $this->processOneEvent($event, $calendar);
             }
             $pageToken = $eventList->getNextPageToken();
             if (!$pageToken) {
-                break;
+                return true;
             }
             $this->info('Making request with refresh token');
             $params['pageToken'] = $pageToken;
-            $eventList = $this->service->events->listEvents($calendar->calendar_id, $params);
         }
     }
 

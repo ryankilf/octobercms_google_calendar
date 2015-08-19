@@ -12,17 +12,15 @@ class CreateCalendarImagesTable extends Migration
         Schema::create('kilfedder_googlecalendar_calendar_images', function ($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('image')->unsigned();
             $table->text('keywords');
+            $table->char('label', 255);
             $table->softDeletes();
             $table->timestamps();
         });
 
-        //Match Against will be used to actually do the matching at cron time.
         DB::statement('ALTER TABLE kilfedder_googlecalendar_calendar_images ADD FULLTEXT full(keywords)');
-        DB::statement('ALTER TABLE kilfedder_googlecalendar_events ADD FULLTEXT full(summary, description)');
-        DB::statement('ALTER TABLE kilfedder_googlecalendar_events ADD FULLTEXT full(summary)');
-        DB::statement('ALTER TABLE kilfedder_googlecalendar_events ADD FULLTEXT full(description)');
+
+
     }
 
     public function down()

@@ -39,30 +39,32 @@ class UpdateCalendars extends UpdateBase
 
     private function processOneCalendar(Google_Service_Calendar_CalendarListEntry $calendarListEntry)
     {
-        $this->info('processing ' . $calendarListEntry->getId() . ' ' . $calendarListEntry->getSummary());
+        $this->info('processing this calendar:: ' . $calendarListEntry->getId() . ' ' . $calendarListEntry->getSummary());
         //if calendar is deleted, softDelete else just save the
         try {
             $calendar = Calendar::where('calendar_id', $calendarListEntry->getId())->firstOrFail();
             $this->comment('Calendar found');
         } catch (ModelNotFoundException $e) {
             if ($calendarListEntry->getDeleted()) {
-                return;
+
+                $this->comment('Calendar doesn\`t exist anyway' . print_r($calendarListEntry->getDeleted(), true));
+                //return;
             }
             $this->comment('New Calendar!');
             $calendar = new Calendar();
         }
 
-        if ($calendarListEntry->getDeleted()) {
+        /*if ($calendarListEntry->getDeleted()) {
             $this->comment('Deleting Calendar');
             $calendar->delete();
             return;
-        }
+        }*/
 
-        $calendar->foreground_colour = $calendarListEntry->getForegroundColor();
-        $calendar->background_colour = $calendarListEntry->getBackgroundColor();
+        $calendar->foreground_colour = (string) $calendarListEntry->getForegroundColor();
+        $calendar->background_colour = (string) $calendarListEntry->getBackgroundColor();
         $calendar->etag = $calendarListEntry->getEtag();
         $calendar->calendar_id = $calendarListEntry->getId();
-        $calendar->summary = $calendarListEntry->getSummary();
+        $calendar->summary = (string) $calendarListEntry->getSummary();
         $calendar->description = (string)$calendarListEntry->getDescription();
         $calendar->save();
         $this->comment('Calendar Saved');

@@ -1,5 +1,6 @@
 <?php namespace Kilfedder\GoogleCalendar\Updates;
 
+use Illuminate\Support\Facades\DB;
 use Schema;
 use October\Rain\Database\Updates\Migration;
 
@@ -20,8 +21,14 @@ class CreateEventsTable extends Migration
             $table->boolean('all_day_event')->default(false);
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->char('slug', 255);
             $table->timestamps();
         });
+
+        //Match Against will be used to actually do the matching at cron time.
+        DB::statement('ALTER TABLE kilfedder_googlecalendar_events ADD FULLTEXT summary_description(summary, description)');
+        DB::statement('ALTER TABLE kilfedder_googlecalendar_events ADD FULLTEXT summary(summary)');
+        DB::statement('ALTER TABLE kilfedder_googlecalendar_events ADD FULLTEXT description(description)');
     }
 
     public function down()
