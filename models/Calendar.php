@@ -50,7 +50,12 @@ class Calendar extends Model
     public function setUrl($pageName, $controller)
     {
 
-        return $this->url = $controller->pageUrl($pageName, $params);
+        $params = [
+            'calendarSlug' => $this->slug,
+        ];
+
+        $this->url = $controller->pageUrl($pageName, $params);
+        return $this->url;
     }
 
 }

@@ -1,0 +1,12 @@
+{% set calendars = __SELF__.calendars %}
+
+<ul class="calendar-list">
+    {% for calendar in calendars %}
+    <li>
+        <h2><a href="{{ calendar.url }}">{{ calendar.summary }}</a></h2>
+        {% if calendar.description %}
+        <p class="description">{{ calendar.description }}</p>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>

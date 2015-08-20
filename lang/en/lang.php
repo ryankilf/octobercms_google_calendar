@@ -41,6 +41,11 @@ return [
             'years_forward' => 'How far into the future should the system sync events from (N.B. Repeating events may go on forever)?',
             'delete_old_events' => 'Delete events once they are too old to be synced?'
         ]
-
+    ],
+    'settings' => [
+        'calendars_component_title' => 'Calendars Component',
+        'calendars_component_description' => 'Displays a list of your calendars',
+        'calendars_page' => 'Calendars Page',
+        'calendars_page_description' => 'Location of the base Calendars Page'
     ]
 ];

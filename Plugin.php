@@ -61,7 +61,12 @@ class Plugin extends PluginBase
         ];
     }
 
-
+    public function registerComponents()
+    {
+        return [
+            'Kilfedder\Googlecalendar\Components\Calendars'       => 'calendars'
+        ];
+    }
 
     public function registerNavigation()
     {
