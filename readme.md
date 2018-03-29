@@ -2,6 +2,10 @@
 
 This plugin adds Google Calendar features to the [OctoberCMS](http://octobercms.com).
 
+# Abandoned
+
+This is abandoned. You should fork it and make it your own, if you like.
+
 ## Configuring
 
 Google Calendar API uses the OAuth security. In order to use the plugin you need create a Google API application.
